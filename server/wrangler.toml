@@ -5,7 +5,7 @@ account_id = "78ef37d38aa6660db87cfddbe3d0b167"
 workers_dev = false
 
 kv_namespaces = [
-  { binding = "QUANTUM", id = "189d4229149c4a86ae74f6ea1656d5c3" }
+  { binding = "QUANTUM", id = "189d4229149c4a86ae74f6ea1656d5c3", preview_id = "4d73a394b01d4c0abc9e1219fbd2ebfc" }
 ]
 
 zone_id = "aaa13161f08d5ebf59ac7f7eed9a3786"

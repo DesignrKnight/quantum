@@ -1,0 +1,12 @@
+name = "quantum"
+type = "javascript"
+
+account_id = "78ef37d38aa6660db87cfddbe3d0b167"
+workers_dev = false
+
+kv_namespaces = [
+  { binding = "QUANTUM", id = "189d4229149c4a86ae74f6ea1656d5c3" }
+]
+
+zone_id = "aaa13161f08d5ebf59ac7f7eed9a3786"
+routes = ["nitr.one/*"]

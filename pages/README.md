@@ -1,114 +1,230 @@
-<p align="center">
-  <a href="https://cara.lekoarts.de">
-    <img alt="LekoArts" src="https://img.lekoarts.de/gatsby/gatsby-site-illustration.png" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby Starter Portfolio: Cara
-</h1>
+# [Blk• Design  System React](https://demos.creative-tim.com/blk-design-system-react) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/home?status=Material%20Kit%20PRO%20is%20a%20Bootstrap%20UI%20Kit%20with%20a%20fresh,%20new%20design%20inspired%20by%20Google's%20Material%20Design%20%E2%9D%A4%EF%B8%8Fhttps%3A//demos.creative-tim.com/material-kit-pro/presentation.html%20%23bootstrap%20%23material%20%23design%20%23uikit%20%23premium%20%20via%20%40CreativeTim)
 
-<p align="center">
-  <a href="https://github.com/LekoArts/gatsby-starter-portfolio-cara/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-0BSD-blue.svg" alt="Gatsby Starter Portfolio: Cara is released under the 0BSD license." />
-  </a>
-  <a href="https://github.com/sponsors/LekoArts">
-    <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/LekoArts">
-  </a>
-  <a href="https://www.lekoarts.de?utm_source=cara&utm_medium=Starter">
-    <img alt="Website" src="https://img.shields.io/badge/-website-blue">
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=lekoarts_de">
-    <img src="https://img.shields.io/twitter/follow/lekoarts_de.svg?label=Follow%20@lekoarts_de" alt="Follow @lekoarts_de" />
-  </a>
-</p>
 
-Playful and Colorful One-Page portfolio featuring Parallax effects and animations. Using the Gatsby Theme [`@lekoarts/gatsby-theme-cara`](https://github.com/LekoArts/gatsby-themes/tree/master/themes/gatsby-theme-cara).
+![version](https://img.shields.io/badge/version-1.2.0-blue.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/blk-design-system-react.svg?maxAge=2592000)](https://github.com/creativetimofficial/blk-design-system-react/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/blk-design-system-react.svg?maxAge=2592000)](https://github.com/creativetimofficial/blk-design-system-react/issues?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim-general/Lobby) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
 
-[**Demo Website**](https://cara.lekoarts.de)
 
-Also be sure to check out other [Free & Open Source Gatsby Themes](https://themes.lekoarts.de) and my [Personal Website](https://www.lekoarts.de?utm_source=cara&utm_medium=Starter).
+![Product Presentation Image](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-react/blk-design-system-react.jpg?raw=true)
 
-## ✨ Features
+**[Blk• Design  System React](http://demos.creative-tim.com/blk-design-system-react/)** is a responsive Bootstrap 4 kit, developed using [React](https://reactjs.org/), [Reactstrap](https://reactstrap.github.io/) and [create-react-app](https://facebook.github.io/create-react-app/), and it is provided for free by Creative Tim. It is a beautiful cross-platform UI kit featuring over 70 elements and 3 templates.
 
-- Theme UI-based theming
-- react-spring parallax effect
-- CSS Animations on Shapes
+Blk• Design  System React will help you create a clean and simple website that is a perfect fit for today's black design. It is built using the 12 column grid system, with components designed to fit together perfectly. It makes use of bold colours, beautiful typography, clear photography and spacious arrangements.
 
-## 🚀 Getting Started
+## Complex Documentation
 
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/LekoArts/gatsby-starter-portfolio-cara)
+Each element is well presented in a very complex documentation. You can read more about the idea behind this design system here. You can check the components here and the foundation here.
 
-### 1. **Create a Gatsby site.**
+## Bootstrap 4 Support
 
-Use `git` to clone the site and navigate into it:
+Blk• Design System React is built on top of the much awaited Bootstrap 4 (Reactstrap). This makes starting a new project very simple. It also provides benefits if you are already working on a Bootstrap 4 or Reactstrap project; you can just import the Blk• Design System React style over it. Most of the elements have been redesigned; but if you are using an element we have not touched, it will fall back to the Bootstrap default.
 
-```sh
-git clone https://github.com/LekoArts/gatsby-starter-portfolio-cara project-name
-cd project-name
+
+## Table of Contents
+
+* [Versions](#versions)
+* [PRO Versions](#pro-versions)
+* [Demo](#demo)
+* [Quick Start](#quick-start)
+* [Documentation](#documentation)
+* [File Structure](#file-structure)
+* [Browser Support](#browser-support)
+* [Resources](#resources)
+* [Reporting Issues](#reporting-issues)
+* [Licensing](#licensing)
+* [Useful Links](#useful-links)
+
+
+## Versions
+
+[<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/html-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/blk-design-system?ref=blkdsr-readme)[<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/react-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/blk-design-system-react?ref=blkdsr-readme)[<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/angular-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/blk-design-system-angular?ref=blkdsr-readme)
+
+
+| HTML | React | Angular |
+| --- | --- | --- |
+| [![BLK Design System  HTML](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system/opt_blk_thumbnail.jpg?raw=true)](https://www.creative-tim.com/product/blk-design-system)  | [![BLK Design System  React](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/blk-design-system-react/blk-design-system-react.jpg)](https://www.creative-tim.com/product/blk-design-system-react)  | [![BLK Design System  Angular](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/blk-design-system-angular/opt_blk_angular_thumbnail.jpg)](https://www.creative-tim.com/product/blk-design-system-angular) |
+
+
+## PRO Versions
+
+[<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/html-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/blk-design-system-pro?ref=blkdsr-readme)[<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/react-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/blk-design-system-pro-react?ref=blkdsr-readme)[<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/angular-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/blk-design-system-pro-angular?ref=blkdsr-readme)
+
+
+| HTML | React | Angular |
+| --- | --- | --- |
+| [![BLK Design System PRO HTML](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-pro/opt_blkp_thumbnail.jpg?raw=true)](https://www.creative-tim.com/product/blk-design-system-pro)  | [![BLK Design System PRO React](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/blk-design-system-pro-react/blk-design-system-pro-react.jpg)](https://www.creative-tim.com/product/blk-design-system-react)  | [![BLK Design System PRO Angular](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/blk-design-system-pro-angular/opt_blkp_angular_thumbnail.jpg)](https://www.creative-tim.com/product/blk-design-system-angular) |
+
+
+## Demo
+
+| Buttons | Inputs | Navbars  |
+| --- | --- | ---  |
+| [![Buttons](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-react/buttons.png?raw=true)](https://demos.creative-tim.com/blk-design-system-react/#/)  | [![Inputs](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-react/inputs.png?raw=true)](https://demos.creative-tim.com/blk-design-system-react/#/)  | [![Navbar](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-react/navbars.png?raw=true)](https://demos.creative-tim.com/blk-design-system-react/#/)  
+
+| Login Page | Landing Page | Profile Page  |
+| --- | --- | ---  |
+| [![Register Page](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/blk-design-system-react/register-page.png)](https://demos.creative-tim.com/blk-design-system-react/#/register-page)  | [![Landing Page](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-react/landing-page.png?raw=true)](https://demos.creative-tim.com/blk-design-system-react/#/landing-page)  | [![Profile Page](https://github.com/creativetimofficial/public-assets/blob/main/blk-design-system-react/profile-page.png?raw=true)](https://demos.creative-tim.com/blk-design-system-react/#/profile-page)  
+
+[View More](https://demos.creative-tim.com/blk-design-system-react)
+
+
+## Quick start
+
+- `npm i blk-design-system-react`
+- [Download from Github](https://github.com/creativetimofficial/blk-design-system-react/archive/main.zip).
+- [Download from Creative Tim](https://www.creative-tim.com/product/blk-design-system-react).
+- Install with [Bower](https://bower.io/): ```bower install blk-design-system-react```.
+- Clone the repo: `git clone https://github.com/creativetimofficial/blk-design-system-react.git`.
+
+
+## Documentation
+The documentation for the BLK Design System React is hosted at our [website](https://demos.creative-tim.com/blk-design-system-react/#/documentation/overview).
+
+
+## File Structure
+Within the download you'll find the following directories and files:
+
+```
+Blk• Design System React
+.
+├── CHANGELOG.md
+├── ISSUE_TEMPLATE.md
+├── README.md
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── index.js
+    ├── variables
+    │   └── charts.js
+    ├── assets
+    │   ├── css
+    │   │   ├── blk-design-system-react.css
+    │   │   ├── blk-design-system-react.css.map
+    │   │   ├── blk-design-system-react.min.css
+    │   │   └── nucleo-icons.css
+    │   ├── demo
+    │   │   └── demo.css
+    │   ├── fonts
+    │   │   ├── nucleo.eot
+    │   │   ├── nucleo.ttf
+    │   │   ├── nucleo.woff
+    │   │   └── nucleo.woff2
+    │   ├── img
+    │   └── scss
+    │       ├── blk-design-system-react
+    │       │   ├── bootstrap
+    │       │   │   ├── mixins
+    │       │   │   └── utilities
+    │       │   ├── custom
+    │       │   │   ├── cards
+    │       │   │   ├── mixins
+    │       │   │   ├── sections
+    │       │   │   ├── utilities
+    │       │   │   └── vendor
+    │       │   └── react
+    │       │       └── react-differences.scss
+    │       └── blk-design-system-react.scss
+    ├── components
+    │   ├── Footer
+    │   │   └── Footer.js
+    │   ├── Navbars
+    │   │   ├── ComponentsNavbar.js
+    │   │   └── ExamplesNavbar.js
+    │   └── PageHeader
+    │       └── PageHeader.js
+    └── views
+        ├── Index.js
+        ├── IndexSections
+        │   ├── Basics.js
+        │   ├── Download.js
+        │   ├── Examples.js
+        │   ├── JavaScript.js
+        │   ├── Navbars.js
+        │   ├── Notifications.js
+        │   ├── NucleoIcons.js
+        │   ├── Pagination.js
+        │   ├── Signup.js
+        │   ├── Tabs.js
+        │   └── Typography.js
+        └── examples
+            ├── LandingPage.js
+            ├── ProfilePage.js
+            └── RegisterPage.js
 ```
 
-### 2. **Install dependencies.**
 
-If you use npm 7 or above use the `--legacy-peer-deps` flag. If you use npm 6 you can use `npm install`.
+## Browser Support
 
-```sh
-npm install --legacy-peer-deps
-```
+At present, we officially aim to support the last two versions of the following browsers:
 
-### 3. **Open the code and start customizing!**
+| Chrome | Firefox | Edge | Safari | Opera |
+| :---: | :---: | :---: | :---: | :---: |
+|<img src="https://github.com/creativetimofficial/public-assets/blob/main/logos/chrome-logo.png?raw=true" width="64" height="64">|<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/main/logos/firefox-logo.png" width="64" height="64">|<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/main/logos/edge-logo.png" width="64" height="64">|<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/main/logos/safari-logo.png" width="64" height="64"> |<img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/main/logos/opera-logo.png" width="64" height="64">|
 
-Start the site by running `npm run develop`.
 
-Your site is now running at `http://localhost:8000`!
 
-If you want to learn more about how you can use a Gatsby starter that is configured with a Gatsby theme, you can check out this [shorter](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/using-a-gatsby-theme/) or [longer](https://www.gatsbyjs.com/tutorial/using-a-theme/) tutorial. The tutorials don't exactly apply to this starter however the concepts are the same.
+## Resources
+- Demo: <https://demos.creative-tim.com/blk-design-system-react/#/>
+- Download Page: <https://www.creative-tim.com/product/blk-design-system-react>
+- Documentation: <https://demos.creative-tim.com/blk-design-system-react/#/documentation/overview>
+- License Agreement: <https://www.creative-tim.com/license>
+- Support: <https://www.creative-tim.com/contact-us>
+- Issues: [Github Issues Page](https://github.com/creativetimofficial/blk-design-system-react/issues)
+- **FREE Dashboards:**
 
-## 📝 Using and modifying this starter
+| HTML | React | Vue  |
+| --- | --- | ---  |
+| [![Black Dashboard  HTML](https://github.com/creativetimofficial/public-assets/blob/main/black-dashboard/black-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/black-dashboard) | [![Black Dashboard  React](https://github.com/creativetimofficial/public-assets/blob/main/black-dashboard-react/black-dashboard-react.jpg?raw=true)](https://www.creative-tim.com/product/black-dashboard-react) | [![Vue Black Dashboard](https://github.com/creativetimofficial/public-assets/blob/main/vue-black-dashboard/vue-black-dashboard.jpg?raw=true)](https://www.creative-tim.com/product/vue-black-dashboard)  |
 
-**Important Note:** Please read the guide [Shadowing in Gatsby Themes](https://www.gatsbyjs.com/docs/how-to/plugins-and-themes/shadowing/) to understand how to customize the underlying theme!
+| Angular | Laravel | Django | Nuxt |
+| --- | --- | --- | --- |
+| [![Black Dashboard Angular](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-angular/opt_bd_angular_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-angular)  | [![Black Dashboard Laravel](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-laravel/opt_blk_laravel_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-laravel)  | [![Black Dashboard Django](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-django/opt_bdfree_django_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-django)  | [![Nuxt Dashboard Django](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/nuxt-black-dashboard/opt_bd_nuxjs_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-django)  |
 
-This starter creates a new Gatsby site that installs and configures the theme [`@lekoarts/gatsby-theme-cara`](https://github.com/LekoArts/gatsby-themes/tree/master/themes/gatsby-theme-cara).
+- **PRO Dashboards:**
 
-Have a look at the theme's README and files to see what options are available and how you can shadow the various components including Theme UI. Generally speaking you will want to place your files into `src/@lekoarts/gatsby-theme-cara/` to shadow/override files. The Theme UI config can be configured by shadowing its files in `src/gatsby-plugin-theme-ui/`.
+| React | Vue | Nuxt |
+| --- | --- | ---  |
+| [![Black Dashboard PRO React](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-pro-react/black-dashboard-pro-react.jpg)](https://www.creative-tim.com/product/black-dashboard-pro-react) | [![Vue Black Dashboard PRO](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/vue-black-dashboard-pro/vue-black-dashboard-pro.jpg)](https://www.creative-tim.com/product/vue-black-dashboard-pro) | [![Nuxt Black Dashboard PRO](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/nuxt-black-dashboard-pro/opt_bdp_nuxt_thumbnail.jpg)](https://www.creative-tim.com/product/nuxt-black-dashboard-pro)  |
 
-### Changing content
+| Angular | Django | Django |
+| --- | --- | ---  |
+| [![Black Dashboard PRO Angular](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-pro-angular/opt_bdp_angular_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-pro-angular) | [![Black Dashboard PRO Laravel](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-pro-laravel/opt_blkp_laravel_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-pro-laravel)  | [![Black Dashboard PRO Django](https://raw.githubusercontent.com/creativetimofficial/public-assets/main/black-dashboard-pro-django/opt_bdp_django_thumbnail.jpg)](https://www.creative-tim.com/product/black-dashboard-pro-django)  |
 
-The content of this project is defined in four `.mdx` files inside the theme's `sections` folder. You can override the files `intro.mdx`, `projects.mdx`, `about.mdx` and `contact.mdx`. This starter has overridden the `intro.mdx` file as an example. Place the other files in the same `src/@lekoarts/gatsby-theme-cara/sections/` folder.
+## Reporting Issues
 
-You have to use the `<ProjectCard />` component inside `projects.mdx` to display the cards. Example:
+We use GitHub Issues as the official bug tracker for the BLK Design System. Here are some advices for our users that want to report an issue:
 
-```md
-## Projects
+1. Make sure that you are using the latest version of the BLK Design System. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/?ref=blkdsr-readme).
+2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
+3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
 
-<ProjectCard title="Freiheit" link="https://www.behance.net/gallery/58937147/Freiheit" bg="linear-gradient(to right, #D4145A 0%, #FBB03B 100%)">
-This project is my entry to Adobe's #ChallengeYourPerspective contest.
-</ProjectCard>
-```
+## Licensing
 
-### Change your `static` folder
+- Copyright 2020 Creative Tim (https://www.creative-tim.com/?ref=blkdsr-readme)
 
-The `static` folder contains the icons, social media images and `robots.txt`. Don't forget to change these files, too!
+- Licensed under MIT (https://github.com/creativetimofficial/blk-design-system-react/blob/main/LICENSE.md)
 
-## 🤔 Questions or problems?
+## Useful Links
 
-If you have general questions or need help with Gatsby, please go to one of the [support platforms](https://www.gatsbyjs.com/contributing/community/#where-to-get-support) mentioned in Gatsby's documentation. If you have a specific question about this project, you can head to the [GitHub Discussions](https://github.com/LekoArts/gatsby-themes/discussions) of the repository.
+- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
+- [Affiliate Program](https://www.creative-tim.com/affiliates/new) (earn money)
+- [Blog Creative Tim](http://blog.creative-tim.com/)
+- [Free Products](https://www.creative-tim.com/bootstrap-themes/free) from Creative Tim
+- [Premium Products](https://www.creative-tim.com/bootstrap-themes/premium) from Creative Tim
+- [React Products](https://www.creative-tim.com/bootstrap-themes/react-themes) from Creative Tim
+- [Angular Products](https://www.creative-tim.com/bootstrap-themes/angular-themes) from Creative Tim
+- [VueJS Products](https://www.creative-tim.com/bootstrap-themes/vuejs-themes) from Creative Tim
+- [More products](https://www.creative-tim.com/bootstrap-themes) from Creative Tim
+- Check our Bundles [here](https://www.creative-tim.com/bundles?ref="mk-github-readme")
 
-## 🎓 Learning Gatsby
+### Social Media
 
-Looking for more guidance? Full documentation for Gatsby lives [on Gatsby's website](https://www.gatsbyjs.com/).
+Twitter: <https://twitter.com/CreativeTim>
 
-### Themes
+Facebook: <https://www.facebook.com/CreativeTim>
 
-To learn more about Gatsby themes specifically, I recommend checking out the [theme docs](https://www.gatsbyjs.com/docs/themes/).
+Dribbble: <https://dribbble.com/creativetim>
 
-### General
-
-- **For most developers, I recommend starting with the [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/docs/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-
-- **To dive straight into code samples, head [to Gatsby's documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _How-to Guides_ and _Reference_ items in the primary navigation.
-
-## 🌟 Supporting me
-
-Thanks for using this project! I'm always interested in seeing what people do with my projects, so don't hesitate to tag me on [Twitter](https://twitter.com/lekoarts_de) and share the project with me.
-
-Please star this project, share it on Social Media or consider supporting me on [Patreon](https://www.patreon.com/lekoarts) or [GitHub Sponsor](https://github.com/sponsors/LekoArts)!
+Instagram: <https://www.instagram.com/CreativeTimOfficial>

@@ -9,7 +9,7 @@ const statusCode = 301;
 const baseURL = 'https://app.nitr.one/';
 const notFoundURL = 'https://app.nitr.one/404';
 
-const allowedKeyRegex = new RegExp('/^[0-9a-zA-Z]+$/');
+const allowedKeyRegex = new RegExp('^[0-9a-zA-Z]+$');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -41,11 +41,13 @@ router.post('/exists', async request => {
   try {
     const body = await request.json();
     const { key, prefix } = body;
+    console.log(allowedKeyRegex.test(key));
+    // "aa".test()
     if (!allowedKeyRegex.test(key)) {
       return new Response(
         JSON.stringify({
           availibility: false,
-          key: keyToCheck,
+          key: key,
           message: 'Invalid Key, only alphanumeric allowed',
         }),
         {
@@ -58,12 +60,14 @@ router.post('/exists', async request => {
       );
     }
     const keyToCheck = prefix ? `${prefix}+${key}` : key;
+
     const value = await QUANTUM.get(keyToCheck);
     if (value != null) {
       return new Response(
         JSON.stringify({
           availibility: false,
           key: keyToCheck,
+          message: 'Short URL unavailable',
         }),
         {
           status: 400,
@@ -78,6 +82,7 @@ router.post('/exists', async request => {
       JSON.stringify({
         availibility: true,
         key: keyToCheck,
+        message: `Short URL available for ${key}`, // TODO: Add Check here for prefix case
       }),
       {
         status: 200,
@@ -85,32 +90,46 @@ router.post('/exists', async request => {
       },
     );
   } catch (err) {
-    return new Response(`Error: Invalid Request and/or URL.`, {
-      status: 400,
-      headers: {
-        'content-type': 'application/json',
-        ...corsHeaders,
-        Allow: 'POST',
-      },
-    });
-  }
-});
-
-router.post('/', async request => {
-  try {
-    const { url } = await request.json();
-    const key = nanoid().toLowerCase();
-
-    const value = await QUANTUM.get(key);
-    if (value != null) {
-      return new Response(`Invalid key. Already taken.`, {
+    return new Response(
+      JSON.stringify({
+        message: `Error: Invalid Request and/or URL.`,
+      }),
+      {
         status: 400,
         headers: {
           'content-type': 'application/json',
           ...corsHeaders,
           Allow: 'POST',
         },
-      });
+      },
+    );
+  }
+});
+
+router.post('/', async request => {
+  try {
+    const { url, customKey } = await request.json();
+    const defaultkey = nanoid().toLowerCase();
+
+    const key = customKey ? customKey : defaultkey;
+
+    const value = await QUANTUM.get(key);
+    if (value != null) {
+      return new Response(
+        JSON.stringify({
+          availibility: false,
+          key: key,
+          message: 'Invalid Key, already in use',
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
     }
 
     const formattedURL = new URL(url.toString().trim()).href;
@@ -127,14 +146,19 @@ router.post('/', async request => {
     );
   } catch (err) {
     console.log(err);
-    return new Response(`Error: Invalid Request and/or URL.`, {
-      status: 400,
-      headers: {
-        'content-type': 'application/json',
-        ...corsHeaders,
-        Allow: 'POST',
+    return new Response(
+      JSON.stringify({
+        message: `Error: Invalid Request and/or URL.`,
+      }),
+      {
+        status: 400,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+          Allow: 'POST',
+        },
       },
-    });
+    );
   }
 });
 

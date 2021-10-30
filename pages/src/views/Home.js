@@ -30,17 +30,21 @@ const Home = () => {
 	return (
 		<>
 			<Hero className="illustration-section-01" />
-			<Input
-				id="longurl"
-				type="url"
-				label="Shorten"
-				labelHidden
-				hasIcon="right"
-				placeholder="Enter URL to shorten"
-				onChange={(e) => {
-					setLongURL(e.target.value);
-				}}
-			/>
+			<div style={{ display: 'flex' }}>
+				<Input
+					style={{ width: '1fr' }}
+					id="longurl"
+					type="url"
+					label="Shorten"
+					labelHidden
+					hasIcon="right"
+					placeholder="Enter URL to shorten"
+					onChange={(e) => {
+						setLongURL(e.target.value);
+					}}
+				/>{' '}
+				<Button onClick={submitURL}>Shorten</Button>
+			</div>
 			<span className="testimonial-item-name text-color-high">{BASE_API_URL}</span>
 			<span className="text-color-low"> / </span>
 			<span className="testimonial-item-link">
@@ -49,7 +53,6 @@ const Home = () => {
 				</a>
 			</span>
 			<p>{shortURL}</p>
-			<Button onClick={submitURL}>Shorten</Button>
 			{/* <FeaturesTiles /> */}
 			<FeaturesSplit invertMobile topDivider imageFill className="illustration-section-02" />
 			{/* <Testimonial topDivider /> */}

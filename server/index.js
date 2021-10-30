@@ -9,6 +9,8 @@ const statusCode = 301;
 const baseURL = 'https://app.nitr.one/';
 const notFoundURL = 'https://app.nitr.one/404';
 
+const allowedKeyRegex = new RegExp('/^[0-9a-zA-Z]+$/');
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
@@ -35,12 +37,69 @@ router.get('/:key', async ({ params }) => {
   return Response.redirect(responseURL, statusCode);
 });
 
-router.post('/', async request => {
+router.post('/exists', async request => {
   try {
     const body = await request.json();
-    const url = body.url;
-    const defaultKey = nanoid();
-    const key = body.key ? body.key.toLowerCase() : defaultKey.toLowerCase();
+    const { key, prefix } = body;
+    if (!allowedKeyRegex.test(key)) {
+      return new Response(
+        JSON.stringify({
+          availibility: false,
+          key: keyToCheck,
+          message: 'Invalid Key, only alphanumeric allowed',
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+          },
+        },
+      );
+    }
+    const keyToCheck = prefix ? `${prefix}+${key}` : key;
+    const value = await QUANTUM.get(keyToCheck);
+    if (value != null) {
+      return new Response(
+        JSON.stringify({
+          availibility: false,
+          key: keyToCheck,
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+          },
+        },
+      );
+    }
+    return new Response(
+      JSON.stringify({
+        availibility: true,
+        key: keyToCheck,
+      }),
+      {
+        status: 200,
+        headers: { 'content-type': 'application/json', ...corsHeaders },
+      },
+    );
+  } catch (err) {
+    return new Response(`Error: Invalid Request and/or URL.`, {
+      status: 400,
+      headers: {
+        'content-type': 'application/json',
+        ...corsHeaders,
+        Allow: 'POST',
+      },
+    });
+  }
+});
+
+router.post('/', async request => {
+  try {
+    const { url } = await request.json();
+    const key = nanoid().toLowerCase();
 
     const value = await QUANTUM.get(key);
     if (value != null) {

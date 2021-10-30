@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import copy from 'copy-to-clipboard';
 
-const BASE_API_URL = 'http://nitr.one';
+const BASE_API_URL = 'https://nitr.one';
 
 const Home = () => {
 	const [longURL, setLongURL] = React.useState('');

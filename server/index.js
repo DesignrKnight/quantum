@@ -1,7 +1,9 @@
 import { customAlphabet } from 'nanoid';
 import { numbers, lowercase } from 'nanoid-dictionary';
+import { Router } from 'itty-router';
 
 const nanoid = customAlphabet(lowercase + numbers, 5);
+const router = Router();
 
 const statusCode = 301;
 const baseURL = 'https://app.nitr.one/';
@@ -14,20 +16,11 @@ const corsHeaders = {
 };
 
 addEventListener('fetch', event => {
-  if (event.request.method === 'GET') {
-    event.respondWith(handleRequestGET(event.request));
-  } else if (event.request.method === 'POST') {
-    event.respondWith(handleRequestPOST(event.request));
-  } else if (event.request.method === 'OPTIONS') {
-    event.respondWith(handleRequestOPTIONS(event.request));
-  } else {
-    event.respondWith(handleRequest(event.request));
-  }
+  event.respondWith(router.handle(event.request));
 });
 
-async function handleRequestGET(request) {
-  const requestURL = new URL(request.url);
-  const key = requestURL.pathname.slice(1).toLowerCase();
+router.get('/:key', async ({ params }) => {
+  const { key } = params;
   if (key.length === 0) {
     return Response.redirect(baseURL, 302);
   }
@@ -40,9 +33,9 @@ async function handleRequestGET(request) {
   const responseURL = new URL(value).toString().trim();
 
   return Response.redirect(responseURL, statusCode);
-}
+});
 
-async function handleRequestPOST(request) {
+router.post('/', async request => {
   try {
     const body = await request.json();
     const url = body.url;
@@ -84,29 +77,9 @@ async function handleRequestPOST(request) {
       },
     });
   }
+});
 
-  console.log(body);
-
-  return new Response(`Invalid Request and/or URL.`, {
-    status: 400,
-    headers: {
-      Allow: 'POST',
-    },
-  });
-}
-
-async function handleRequest(request) {
-  return new Response(`Method ${request.method} not allowed.`, {
-    status: 405,
-    headers: {
-      Allow: 'GET',
-      'content-type': 'application/json',
-      ...corsHeaders,
-    },
-  });
-}
-
-function handleRequestOPTIONS(request) {
+router.options('*', request => {
   // Make sure the necessary headers are present
   // for this to be a valid pre-flight request
   let headers = request.headers;
@@ -139,4 +112,6 @@ function handleRequestOPTIONS(request) {
       },
     });
   }
-}
+});
+
+router.all('*', () => Response.redirect(notFoundURL, 302));

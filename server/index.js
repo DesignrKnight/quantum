@@ -23,6 +23,7 @@ addEventListener('fetch', event => {
 
 router.get('/:key', async ({ params }) => {
   const { key } = params;
+  console.log(key);
   if (key.length === 0) {
     return Response.redirect(baseURL, 302);
   }
@@ -41,8 +42,6 @@ router.post('/exists', async request => {
   try {
     const body = await request.json();
     const { key, prefix } = body;
-    console.log(allowedKeyRegex.test(key));
-    // "aa".test()
     if (!allowedKeyRegex.test(key)) {
       return new Response(
         JSON.stringify({
@@ -196,5 +195,5 @@ router.options('*', request => {
     });
   }
 });
-
+router.get('/', () => Response.redirect(baseURL, 302));
 router.all('*', () => Response.redirect(notFoundURL, 302));

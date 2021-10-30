@@ -1,5 +1,6 @@
 name = "quantum"
-type = "javascript"
+type = "webpack"
+webpack_config = "webpack.config.js"
 
 account_id = "78ef37d38aa6660db87cfddbe3d0b167"
 workers_dev = false

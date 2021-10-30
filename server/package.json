@@ -12,5 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "prettier": "^1.18.2"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.30",
+    "nanoid-dictionary": "^4.3.0"
   }
 }

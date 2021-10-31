@@ -28,6 +28,7 @@ const App = () => {
 				<Switch>
 					<AppRoute exact path="/" component={Home} layout={LayoutDefault} />
 					<AppRoute exact path="/dashboard" component={Dashboard} layout={LayoutDefault} />
+					<AppRoute component={() => <div>404 Not found </div>} />
 				</Switch>
 			)}
 		/>

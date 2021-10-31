@@ -22,13 +22,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 
-const BASE_API_URL = 'https://nitr.one';
-const BASE_URL = 'nitr.one';
-const URL_SCHEME = 'https';
+// const BASE_API_URL = 'https://nitr.one';
+// const BASE_URL = 'nitr.one';
+// const URL_SCHEME = 'https';
 
-// const BASE_API_URL = 'http://127.0.0.1:8787';
-// const BASE_URL = '127.0.0.1:8787';
-// const URL_SCHEME = 'http';
+const BASE_API_URL = 'http://127.0.0.1:8787';
+const BASE_URL = '127.0.0.1:8787';
+const URL_SCHEME = 'http';
 
 const Home = () => {
 	const [longURL, setLongURL] = React.useState('');

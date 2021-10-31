@@ -17,6 +17,8 @@ ReactDOM.render(
 		domain="nitrone.eu.auth0.com"
 		clientId="fYN6dlRif5AZ0Yd161L5k6BHVYtagxo9"
 		redirectUri={window.location.origin}
+		audience="https://nitrone.eu.auth0.com/api/v2/"
+		scope="read:current_user"
 	>
 		<Router history={history}>
 			<App />

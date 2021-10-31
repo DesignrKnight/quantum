@@ -23,10 +23,41 @@ const defaultProps = {
 
 const Header = ({ className, navPosition, hideNav, hideSignin, bottomOuterDivider, bottomDivider, ...props }) => {
 	const [isActive, setIsactive] = useState(false);
-	const { loginWithRedirect, logout, user, isAuthenticated, isLoading } = useAuth0();
+	const { loginWithRedirect, logout, user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
 	const nav = useRef(null);
 	const hamburger = useRef(null);
+
+	const AUTH0_DOMAIN = 'nitrone.eu.auth0.com';
+
+	const onDashboardClick = async () => {
+		const accessToken = await getAccessTokenSilently({
+			audience: `https://${AUTH0_DOMAIN}/api/v2/`,
+			scope: 'read:current_user',
+		});
+		console.log(accessToken);
+	};
+
+	// try {
+	// 	const accessToken = await getAccessTokenSilently({
+	// 		audience: `https://${domain}/api/v2/`,
+	// 		scope: 'read:current_user',
+	// 	});
+
+	// 	const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
+
+	// 	const metadataResponse = await fetch(userDetailsByIdUrl, {
+	// 		headers: {
+	// 			Authorization: `Bearer ${accessToken}`,
+	// 		},
+	// 	});
+
+	// 	const { user_metadata } = await metadataResponse.json();
+
+	// 	setUserMetadata(user_metadata);
+	// } catch (e) {
+	// 	console.log(e.message);
+	// }
 
 	useEffect(() => {
 		isActive && openMenu();
@@ -81,8 +112,8 @@ const Header = ({ className, navPosition, hideNav, hideSignin, bottomOuterDivide
 									{isAuthenticated && (
 										<ul className={classNames('list-reset text-xs', navPosition && `header-nav-${navPosition}`)}>
 											<li>
-												<Link to="#0" onClick={closeMenu}>
-													Dashboard
+												<Link to="/dashboard" onClick={onDashboardClick}>
+													Apply for Custom Domain
 												</Link>
 											</li>
 										</ul>

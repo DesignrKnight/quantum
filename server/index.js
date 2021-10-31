@@ -23,7 +23,6 @@ addEventListener('fetch', event => {
 
 router.get('/:key', async ({ params }) => {
   const { key } = params;
-  console.log(key);
   if (key.length === 0) {
     return Response.redirect(baseURL, 302);
   }
@@ -81,7 +80,7 @@ router.post('/exists', async request => {
       JSON.stringify({
         availibility: true,
         key: keyToCheck,
-        message: `Short URL available for ${key}`, // TODO: Add Check here for prefix case
+        message: `Short URL available for ${key}`,
       }),
       {
         status: 200,
@@ -110,7 +109,7 @@ router.post('/', async request => {
     const { url, customKey } = await request.json();
     const defaultkey = nanoid().toLowerCase();
 
-    const key = customKey ? customKey : defaultkey;
+    const key = customKey ? customKey.toLowerCase() : defaultkey;
 
     const value = await QUANTUM.get(key);
     if (value != null) {
@@ -137,6 +136,80 @@ router.post('/', async request => {
       JSON.stringify({
         message: `Successly added ${key} to route to ${formattedURL}`,
         key: key,
+      }),
+      {
+        status: 201,
+        headers: { 'content-type': 'application/json', ...corsHeaders },
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    return new Response(
+      JSON.stringify({
+        message: `Error: Invalid Request and/or URL.`,
+      }),
+      {
+        status: 400,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+          Allow: 'POST',
+        },
+      },
+    );
+  }
+});
+
+router.post('/withPrefix', async request => {
+  try {
+    const { url, customKey, prefix } = await request.json();
+
+    if (!prefix) {
+      return new Response(
+        JSON.stringify({
+          message: 'Invalid prefix',
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
+    }
+
+    const defaultkey = nanoid().toLowerCase();
+    const keyWithoutPrefix = customKey ? customKey.toLowerCase() : defaultkey;
+    const key = `${prefix}+${keyWithoutPrefix}`;
+
+    const value = await QUANTUM.get(key);
+    if (value != null) {
+      return new Response(
+        JSON.stringify({
+          availibility: false,
+          key: key,
+          message: 'Invalid Key, already in use',
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
+    }
+
+    const formattedURL = new URL(url.toString().trim()).href;
+    await QUANTUM.put(key, formattedURL);
+    return new Response(
+      JSON.stringify({
+        message: `Successly added ${key} to route to ${formattedURL}`,
+        key: keyWithoutPrefix,
+        prefix,
       }),
       {
         status: 201,

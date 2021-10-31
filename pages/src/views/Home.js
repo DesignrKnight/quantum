@@ -16,8 +16,19 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import copy from 'copy-to-clipboard';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
 
 const BASE_API_URL = 'https://nitr.one';
+const BASE_URL = 'nitr.one';
+const URL_SCHEME = 'https';
+
+// const BASE_API_URL = 'http://127.0.0.1:8787';
+// const BASE_URL = '127.0.0.1:8787';
+// const URL_SCHEME = 'http';
 
 const Home = () => {
 	const [longURL, setLongURL] = React.useState('');
@@ -27,6 +38,7 @@ const Home = () => {
 	const [showCustomisation, setShowCustomisation] = React.useState(false);
 	const [shortURL, setShortURL] = React.useState('');
 	const [showSnackbar, setShowSnackbar] = React.useState(false);
+	const [prefix, setPrefix] = React.useState('');
 
 	const handleCloseSnackbar = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -37,23 +49,45 @@ const Home = () => {
 	};
 
 	const submitURL = async () => {
-		const response = await fetch(BASE_API_URL, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				url: longURL,
-				customKey: showCustomisation ? customKey : null,
-			}),
-		}).catch((err) => setErrorMessage(err.message));
-		const statusCode = response.status;
-		const data = await response.json();
-		if (statusCode === 400) {
-			setErrorMessage(data.message);
+		if (prefix) {
+			const response = await fetch(BASE_API_URL + '/withPrefix', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					url: longURL,
+					customKey: showCustomisation ? customKey : null,
+					prefix: prefix,
+				}),
+			}).catch((err) => setErrorMessage(err.message));
+			const statusCode = response.status;
+			const data = await response.json();
+			if (statusCode === 400) {
+				setErrorMessage(data.message);
+			} else {
+				setShortURL(URL_SCHEME + '://' + data.prefix + '.' + BASE_URL + '/' + data.key);
+				setShowSnackbar(true);
+			}
 		} else {
-			setShortURL(data.key);
-			setShowSnackbar(true);
+			const response = await fetch(BASE_API_URL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					url: longURL,
+					customKey: showCustomisation ? customKey : null,
+				}),
+			}).catch((err) => setErrorMessage(err.message));
+			const statusCode = response.status;
+			const data = await response.json();
+			if (statusCode === 400) {
+				setErrorMessage(data.message);
+			} else {
+				setShortURL(URL_SCHEME + '://' + BASE_URL + '/' + data.key);
+				setShowSnackbar(true);
+			}
 		}
 	};
 
@@ -65,6 +99,7 @@ const Home = () => {
 			},
 			body: JSON.stringify({
 				key: customKey,
+				prefix: prefix || null,
 			}),
 		}).catch((err) => setErrorMessage(err.message));
 		const statusCode = response.status;
@@ -76,7 +111,7 @@ const Home = () => {
 		}
 	};
 	const handleCopy = () => {
-		copy(BASE_API_URL + '/' + shortURL);
+		copy(shortURL);
 	};
 	useEffect(() => {
 		if (errorMessage.length > 0) {
@@ -105,7 +140,23 @@ const Home = () => {
 	return (
 		<>
 			<Hero className="illustration-section-01" />
-			<div style={{ display: 'flex', gap: '1rem', margin: '1rem' }}>
+			<div style={{ display: 'flex', gap: '1rem', margin: '1rem', alignItems: 'baseline' }}>
+				<FormControl sx={{ m: 1, minWidth: 120 }}>
+					<InputLabel id="demo-simple-select-helper-label">Prefix</InputLabel>
+					<Select
+						labelId="demo-simple-select-helper-label"
+						id="demo-simple-select-helper"
+						value={prefix}
+						label="Prefix"
+						onChange={(event) => setPrefix(event.target.value)}
+					>
+						<MenuItem value="">
+							<em>None</em>
+						</MenuItem>
+						<MenuItem value={'mm'}>mm</MenuItem>
+					</Select>
+					<FormHelperText>Login to apply and claim custom prefix</FormHelperText>
+				</FormControl>
 				<TextField
 					style={{ width: '100%' }}
 					id="filled-basic"
@@ -147,12 +198,7 @@ const Home = () => {
 					</Button>
 				</div>
 			)}
-			<Snackbar
-				open={showSnackbar}
-				onClose={handleCloseSnackbar}
-				message={BASE_API_URL + '/' + shortURL}
-				action={action}
-			/>
+			<Snackbar open={showSnackbar} onClose={handleCloseSnackbar} message={shortURL} action={action} />
 			{errorMessage.length > 0 && (
 				<Alert severity="error" style={{ display: 'flex', gap: '1rem', margin: '1rem' }}>
 					{errorMessage}

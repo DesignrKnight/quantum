@@ -1,25 +1,19 @@
 import React, { useEffect } from 'react';
-// import sections
 import Hero from '../components/sections/Hero';
-// import FeaturesTiles from '../components/sections/FeaturesTiles';
-// import FeaturesSplit from '../components/sections/FeaturesSplit';
-// import Testimonial from '../components/sections/Testimonial';
-// import Cta from '../components/sections/Cta';
-// import Input from '../components/elements/Input';
-// import Button from '../components/elements/Button';
+
 import { useAuth0 } from '@auth0/auth0-react';
 
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-// const BASE_API_URL = 'https://nitr.one';
-// const BASE_URL = 'nitr.one';
-// const URL_SCHEME = 'https';
+const BASE_API_URL = 'https://nitr.one';
+const BASE_URL = 'nitr.one';
+const URL_SCHEME = 'https';
 
-const BASE_API_URL = 'http://127.0.0.1:8787';
-const BASE_URL = '127.0.0.1:8787';
-const URL_SCHEME = 'http';
+// const BASE_API_URL = 'http://127.0.0.1:8787';
+// const BASE_URL = '127.0.0.1:8787';
+// const URL_SCHEME = 'http';
 
 const AUTH0_DOMAIN = 'nitrone.eu.auth0.com';
 
@@ -30,6 +24,9 @@ const Dashboard = () => {
 	const [URL, setURL] = React.useState('');
 	const [justification, setJustification] = React.useState('');
 	const [accessToken, setAccessToken] = React.useState();
+	const [existingPrefix, setExistingPrefix] = React.useState('');
+	const [prefixApproval, setPrefixApproval] = React.useState(false);
+	const [alertMessage, setAlertMessage] = React.useState('');
 
 	const getAccessToken = async () => {
 		const accessToken = await getAccessTokenSilently({
@@ -37,14 +34,53 @@ const Dashboard = () => {
 			scope: 'read:current_user',
 		});
 		setAccessToken(accessToken);
+		const response = await fetch(BASE_API_URL + '/userInfo', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+		}).catch((err) => console.log(err.message));
+		const statusCode = response.status;
+		const data = await response.json();
+		if (statusCode !== 400) {
+			setExistingPrefix(data.user.prefix);
+			setPrefixApproval(data.prefix.isApproved ? true : false);
+		}
 	};
 
 	useEffect(() => {
 		getAccessToken();
 	}, []);
 
+	useEffect(() => {
+		if (alertMessage.length > 0) {
+			setTimeout(() => {
+				setAlertMessage('');
+			}, 3000);
+		}
+	}, [alertMessage.length]);
+
 	const onSubmit = async () => {
-		console.log('onSubmit');
+		const response = await fetch(BASE_API_URL + '/applyForPrefix', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify({
+				prefix,
+				url: URL,
+				justification,
+			}),
+		}).catch((err) => console.log(err.message));
+		const statusCode = response.status;
+		const data = await response.json();
+		if (statusCode === 400) {
+			setAlertMessage(data.message);
+		} else {
+			setAlertMessage(data.message);
+		}
 	};
 
 	if (!isLoading && !isAuthenticated) {
@@ -59,6 +95,20 @@ const Dashboard = () => {
 	return (
 		<>
 			<Hero className="illustration-section-01" />
+			{existingPrefix && (
+				<Alert
+					severity={prefixApproval ? 'success' : 'warning'}
+					style={{ display: 'flex', gap: '1rem', margin: '1rem' }}
+				>
+					{`You already have a prefix ${prefixApproval ? '' : 'request'}: ${existingPrefix}`}
+				</Alert>
+			)}
+
+			{alertMessage.length > 0 && (
+				<Alert severity={'info'} style={{ display: 'flex', gap: '1rem', margin: '1rem' }}>
+					{alertMessage}
+				</Alert>
+			)}
 
 			<div style={{ margin: '1rem', display: 'flex', alignItems: 'baseline' }}>
 				<TextField

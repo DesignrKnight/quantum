@@ -14,7 +14,10 @@
     "prettier": "^1.18.2"
   },
   "dependencies": {
+    "@cfworker/jwt": "^1.9.0",
     "itty-router": "^2.4.4",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^2.0.5",
     "nanoid": "^3.1.30",
     "nanoid-dictionary": "^4.3.0"
   }

@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
-// import sections
+import { useAuth0 } from '@auth0/auth0-react';
+
 import Hero from '../components/sections/Hero';
-// import FeaturesTiles from '../components/sections/FeaturesTiles';
-// import FeaturesSplit from '../components/sections/FeaturesSplit';
-// import Testimonial from '../components/sections/Testimonial';
-// import Cta from '../components/sections/Cta';
-// import Input from '../components/elements/Input';
-// import Button from '../components/elements/Button';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
@@ -22,15 +18,19 @@ import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 
-// const BASE_API_URL = 'https://nitr.one';
-// const BASE_URL = 'nitr.one';
-// const URL_SCHEME = 'https';
+const BASE_API_URL = 'https://nitr.one';
+const BASE_URL = 'nitr.one';
+const URL_SCHEME = 'https';
 
-const BASE_API_URL = 'http://127.0.0.1:8787';
-const BASE_URL = '127.0.0.1:8787';
-const URL_SCHEME = 'http';
+// const BASE_API_URL = 'http://127.0.0.1:8787';
+// const BASE_URL = '127.0.0.1:8787';
+// const URL_SCHEME = 'http';
+
+const AUTH0_DOMAIN = 'nitrone.eu.auth0.com';
 
 const Home = () => {
+	const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+	const [accessToken, setAccessToken] = React.useState('');
 	const [longURL, setLongURL] = React.useState('');
 	const [errorMessage, setErrorMessage] = React.useState('');
 	const [availableMessage, setAvailableMessage] = React.useState('');
@@ -39,6 +39,7 @@ const Home = () => {
 	const [shortURL, setShortURL] = React.useState('');
 	const [showSnackbar, setShowSnackbar] = React.useState(false);
 	const [prefix, setPrefix] = React.useState('');
+	const [existingPrefix, setExistingPrefix] = React.useState('');
 
 	const handleCloseSnackbar = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -113,6 +114,31 @@ const Home = () => {
 	const handleCopy = () => {
 		copy(shortURL);
 	};
+
+	const getAccessToken = async () => {
+		const accessToken = await getAccessTokenSilently({
+			audience: `https://${AUTH0_DOMAIN}/api/v2/`,
+			scope: 'read:current_user',
+		});
+		setAccessToken(accessToken);
+		const response = await fetch(BASE_API_URL + '/userInfo', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${accessToken}`,
+			},
+		}).catch((err) => console.log(err.message));
+		const statusCode = response.status;
+		const data = await response.json();
+		if (statusCode !== 400) {
+			setExistingPrefix(data.prefix.isApproved ? data.user.prefix : null);
+		}
+	};
+
+	useEffect(() => {
+		getAccessToken();
+	}, []);
+
 	useEffect(() => {
 		if (errorMessage.length > 0) {
 			setTimeout(() => {
@@ -153,7 +179,7 @@ const Home = () => {
 						<MenuItem value="">
 							<em>None</em>
 						</MenuItem>
-						<MenuItem value={'mm'}>mm</MenuItem>
+						{existingPrefix && <MenuItem value={existingPrefix}>{existingPrefix}</MenuItem>}
 					</Select>
 					<FormHelperText>Login to apply and claim custom prefix</FormHelperText>
 				</FormControl>

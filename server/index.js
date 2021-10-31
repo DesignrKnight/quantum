@@ -1,6 +1,9 @@
 import { customAlphabet } from 'nanoid';
 import { numbers, lowercase } from 'nanoid-dictionary';
 import { Router } from 'itty-router';
+import { parseJwt } from '@cfworker/jwt';
+// import jwksClient from 'jwks-rsa';
+// import jwt from 'jsonwebtoken';
 
 const nanoid = customAlphabet(lowercase + numbers, 5);
 const router = Router();
@@ -20,7 +23,66 @@ const corsHeaders = {
 addEventListener('fetch', event => {
   event.respondWith(router.handle(event.request));
 });
+router.get('/userInfo', async request => {
+  const jwt = request.headers.get('Authorization').split(' ')[1];
+  const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
+  const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
+  try {
+    const result = await parseJwt(jwt, issuer, audience);
+    if (!result.valid) {
+      return new Response(
+        JSON.stringify({
+          message: `Authorization Failed.`,
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
+    }
+    const sub = result.payload.sub;
+    const user = await USER.get(sub);
+    const prefix = await PREFIX.get(user.prefix);
 
+    const responsePayload = {
+      prefix,
+      user,
+    };
+
+    return new Response(
+      JSON.stringify({
+        ...responsePayload,
+        message: `Success.`,
+      }),
+      {
+        status: 200,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+        },
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    return new Response(
+      JSON.stringify({
+        message: `Error: Invalid Request and/or URL.`,
+      }),
+      {
+        status: 400,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+          Allow: 'POST',
+        },
+      },
+    );
+  }
+});
 router.get('/:key', async ({ params }) => {
   const { key } = params;
   if (key.length === 0) {
@@ -214,6 +276,155 @@ router.post('/withPrefix', async request => {
       {
         status: 201,
         headers: { 'content-type': 'application/json', ...corsHeaders },
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    return new Response(
+      JSON.stringify({
+        message: `Error: Invalid Request and/or URL.`,
+      }),
+      {
+        status: 400,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+          Allow: 'POST',
+        },
+      },
+    );
+  }
+});
+
+router.post('/applyForPrefix', async request => {
+  const jwt = request.headers.get('Authorization').split(' ')[1];
+  const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
+  const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
+  try {
+    const result = await parseJwt(jwt, issuer, audience);
+    if (!result.valid) {
+      return new Response(
+        JSON.stringify({
+          message: `Authorization Failed.`,
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
+    }
+
+    const { prefix, url, justification } = await request.json();
+    const formattedURL = new URL(url.toString().trim()).href;
+
+    const user = result.payload.sub;
+    const userPayload = {
+      sub: user,
+      prefix,
+    };
+
+    const prefixPayload = {
+      prefix,
+      user,
+      url: formattedURL,
+      justification,
+    };
+
+    const value = await PREFIX.get(prefix);
+    if (value != null) {
+      return new Response(
+        JSON.stringify({
+          message: 'Invalid Prefix, already in use or requested',
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
+    }
+    await PREFIX.put(prefix, JSON.stringify(prefixPayload));
+    await USER.put(user, JSON.stringify(userPayload));
+
+    return new Response(
+      JSON.stringify({
+        prefix,
+        message: `Success.`,
+      }),
+      {
+        status: 201,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+        },
+      },
+    );
+  } catch (err) {
+    console.log(err);
+    return new Response(
+      JSON.stringify({
+        message: `Error: Invalid Request and/or URL.`,
+      }),
+      {
+        status: 400,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+          Allow: 'POST',
+        },
+      },
+    );
+  }
+});
+
+router.post('/userInfo', async request => {
+  const jwt = request.headers.get('Authorization').split(' ')[1];
+  const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
+  const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
+  try {
+    const result = await parseJwt(jwt, issuer, audience);
+    if (!result.valid) {
+      return new Response(
+        JSON.stringify({
+          message: `Authorization Failed.`,
+        }),
+        {
+          status: 400,
+          headers: {
+            'content-type': 'application/json',
+            ...corsHeaders,
+            Allow: 'POST',
+          },
+        },
+      );
+    }
+    const sub = result.payload.sub;
+    const user = await USER.get(sub, { type: 'json' });
+    const prefix = await PREFIX.get(user.prefix, { type: 'json' });
+
+    const responsePayload = {
+      prefix,
+      user,
+    };
+
+    return new Response(
+      JSON.stringify({
+        ...responsePayload,
+        message: `Success.`,
+      }),
+      {
+        status: 200,
+        headers: {
+          'content-type': 'application/json',
+          ...corsHeaders,
+        },
       },
     );
   } catch (err) {

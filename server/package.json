@@ -16,7 +16,7 @@
   "dependencies": {
     "@cfworker/jwt": "^1.9.0",
     "itty-router": "^2.4.4",
-    "nanoid": "^3.1.30",
+    "nanoid": "^3.1.31",
     "nanoid-dictionary": "^4.3.0"
   }
 }

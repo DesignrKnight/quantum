@@ -99,7 +99,7 @@ router.get('/:key', async ({ params }) => {
   return Response.redirect(responseURL, statusCode);
 });
 
-router.post('/exists', async request => {
+router.post('/existsv2', async request => {
   try {
     const body = await request.json();
     const { key, prefix } = body;

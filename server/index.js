@@ -99,351 +99,351 @@ router.get('/:key', async ({ params }) => {
   return Response.redirect(responseURL, statusCode);
 });
 
-router.post('/existsv2', async request => {
-  try {
-    const body = await request.json();
-    const { key, prefix } = body;
-    if (!allowedKeyRegex.test(key)) {
-      return new Response(
-        JSON.stringify({
-          availibility: false,
-          key: key,
-          message: 'Invalid Key, only alphanumeric allowed',
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-          },
-        },
-      );
-    }
-    const keyToCheck = prefix ? `${prefix}+${key}` : key;
+// router.post('/existsv2', async request => {
+//   try {
+//     const body = await request.json();
+//     const { key, prefix } = body;
+//     if (!allowedKeyRegex.test(key)) {
+//       return new Response(
+//         JSON.stringify({
+//           availibility: false,
+//           key: key,
+//           message: 'Invalid Key, only alphanumeric allowed',
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//           },
+//         },
+//       );
+//     }
+//     const keyToCheck = prefix ? `${prefix}+${key}` : key;
 
-    const value = await QUANTUM.get(keyToCheck);
-    if (value != null) {
-      return new Response(
-        JSON.stringify({
-          availibility: false,
-          key: keyToCheck,
-          message: 'Short URL unavailable',
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-          },
-        },
-      );
-    }
-    return new Response(
-      JSON.stringify({
-        availibility: true,
-        key: keyToCheck,
-        message: `Short URL available for ${key}`,
-      }),
-      {
-        status: 200,
-        headers: { 'content-type': 'application/json', ...corsHeaders },
-      },
-    );
-  } catch (err) {
-    return new Response(
-      JSON.stringify({
-        message: `Error: Invalid Request and/or URL.`,
-      }),
-      {
-        status: 400,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-          Allow: 'POST',
-        },
-      },
-    );
-  }
-});
+//     const value = await QUANTUM.get(keyToCheck);
+//     if (value != null) {
+//       return new Response(
+//         JSON.stringify({
+//           availibility: false,
+//           key: keyToCheck,
+//           message: 'Short URL unavailable',
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//           },
+//         },
+//       );
+//     }
+//     return new Response(
+//       JSON.stringify({
+//         availibility: true,
+//         key: keyToCheck,
+//         message: `Short URL available for ${key}`,
+//       }),
+//       {
+//         status: 200,
+//         headers: { 'content-type': 'application/json', ...corsHeaders },
+//       },
+//     );
+//   } catch (err) {
+//     return new Response(
+//       JSON.stringify({
+//         message: `Error: Invalid Request and/or URL.`,
+//       }),
+//       {
+//         status: 400,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//           Allow: 'POST',
+//         },
+//       },
+//     );
+//   }
+// });
 
-router.post('/', async request => {
-  try {
-    const { url, customKey } = await request.json();
-    const defaultkey = nanoid().toLowerCase();
+// router.post('/', async request => {
+//   try {
+//     const { url, customKey } = await request.json();
+//     const defaultkey = nanoid().toLowerCase();
 
-    const key = customKey ? customKey.toLowerCase() : defaultkey;
+//     const key = customKey ? customKey.toLowerCase() : defaultkey;
 
-    const value = await QUANTUM.get(key);
-    if (value != null) {
-      return new Response(
-        JSON.stringify({
-          availibility: false,
-          key: key,
-          message: 'Invalid Key, already in use',
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-            Allow: 'POST',
-          },
-        },
-      );
-    }
+//     const value = await QUANTUM.get(key);
+//     if (value != null) {
+//       return new Response(
+//         JSON.stringify({
+//           availibility: false,
+//           key: key,
+//           message: 'Invalid Key, already in use',
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//             Allow: 'POST',
+//           },
+//         },
+//       );
+//     }
 
-    const formattedURL = new URL(url.toString().trim()).href;
-    await QUANTUM.put(key, formattedURL);
-    return new Response(
-      JSON.stringify({
-        message: `Successly added ${key} to route to ${formattedURL}`,
-        key: key,
-      }),
-      {
-        status: 201,
-        headers: { 'content-type': 'application/json', ...corsHeaders },
-      },
-    );
-  } catch (err) {
-    console.log(err);
-    return new Response(
-      JSON.stringify({
-        message: `Error: Invalid Request and/or URL.`,
-      }),
-      {
-        status: 400,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-          Allow: 'POST',
-        },
-      },
-    );
-  }
-});
+//     const formattedURL = new URL(url.toString().trim()).href;
+//     await QUANTUM.put(key, formattedURL);
+//     return new Response(
+//       JSON.stringify({
+//         message: `Successly added ${key} to route to ${formattedURL}`,
+//         key: key,
+//       }),
+//       {
+//         status: 201,
+//         headers: { 'content-type': 'application/json', ...corsHeaders },
+//       },
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     return new Response(
+//       JSON.stringify({
+//         message: `Error: Invalid Request and/or URL.`,
+//       }),
+//       {
+//         status: 400,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//           Allow: 'POST',
+//         },
+//       },
+//     );
+//   }
+// });
 
-router.post('/withPrefix', async request => {
-  try {
-    const { url, customKey, prefix } = await request.json();
+// router.post('/withPrefix', async request => {
+//   try {
+//     const { url, customKey, prefix } = await request.json();
 
-    if (!prefix) {
-      return new Response(
-        JSON.stringify({
-          message: 'Invalid prefix',
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-            Allow: 'POST',
-          },
-        },
-      );
-    }
+//     if (!prefix) {
+//       return new Response(
+//         JSON.stringify({
+//           message: 'Invalid prefix',
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//             Allow: 'POST',
+//           },
+//         },
+//       );
+//     }
 
-    const defaultkey = nanoid().toLowerCase();
-    const keyWithoutPrefix = customKey ? customKey.toLowerCase() : defaultkey;
-    const key = `${prefix}+${keyWithoutPrefix}`;
+//     const defaultkey = nanoid().toLowerCase();
+//     const keyWithoutPrefix = customKey ? customKey.toLowerCase() : defaultkey;
+//     const key = `${prefix}+${keyWithoutPrefix}`;
 
-    const value = await QUANTUM.get(key);
-    if (value != null) {
-      return new Response(
-        JSON.stringify({
-          availibility: false,
-          key: key,
-          message: 'Invalid Key, already in use',
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-            Allow: 'POST',
-          },
-        },
-      );
-    }
+//     const value = await QUANTUM.get(key);
+//     if (value != null) {
+//       return new Response(
+//         JSON.stringify({
+//           availibility: false,
+//           key: key,
+//           message: 'Invalid Key, already in use',
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//             Allow: 'POST',
+//           },
+//         },
+//       );
+//     }
 
-    const formattedURL = new URL(url.toString().trim()).href;
-    await QUANTUM.put(key, formattedURL);
-    return new Response(
-      JSON.stringify({
-        message: `Successly added ${key} to route to ${formattedURL}`,
-        key: keyWithoutPrefix,
-        prefix,
-      }),
-      {
-        status: 201,
-        headers: { 'content-type': 'application/json', ...corsHeaders },
-      },
-    );
-  } catch (err) {
-    console.log(err);
-    return new Response(
-      JSON.stringify({
-        message: `Error: Invalid Request and/or URL.`,
-      }),
-      {
-        status: 400,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-          Allow: 'POST',
-        },
-      },
-    );
-  }
-});
+//     const formattedURL = new URL(url.toString().trim()).href;
+//     await QUANTUM.put(key, formattedURL);
+//     return new Response(
+//       JSON.stringify({
+//         message: `Successly added ${key} to route to ${formattedURL}`,
+//         key: keyWithoutPrefix,
+//         prefix,
+//       }),
+//       {
+//         status: 201,
+//         headers: { 'content-type': 'application/json', ...corsHeaders },
+//       },
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     return new Response(
+//       JSON.stringify({
+//         message: `Error: Invalid Request and/or URL.`,
+//       }),
+//       {
+//         status: 400,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//           Allow: 'POST',
+//         },
+//       },
+//     );
+//   }
+// });
 
-router.post('/applyForPrefix', async request => {
-  const jwt = request.headers.get('Authorization').split(' ')[1];
-  const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
-  const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
-  try {
-    const result = await parseJwt(jwt, issuer, audience);
-    if (!result.valid) {
-      return new Response(
-        JSON.stringify({
-          message: `Authorization Failed.`,
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-            Allow: 'POST',
-          },
-        },
-      );
-    }
+// router.post('/applyForPrefix', async request => {
+//   const jwt = request.headers.get('Authorization').split(' ')[1];
+//   const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
+//   const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
+//   try {
+//     const result = await parseJwt(jwt, issuer, audience);
+//     if (!result.valid) {
+//       return new Response(
+//         JSON.stringify({
+//           message: `Authorization Failed.`,
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//             Allow: 'POST',
+//           },
+//         },
+//       );
+//     }
 
-    const { prefix, url, justification } = await request.json();
-    const formattedURL = new URL(url.toString().trim()).href;
+//     const { prefix, url, justification } = await request.json();
+//     const formattedURL = new URL(url.toString().trim()).href;
 
-    const user = result.payload.sub;
-    const userPayload = {
-      sub: user,
-      prefix,
-    };
+//     const user = result.payload.sub;
+//     const userPayload = {
+//       sub: user,
+//       prefix,
+//     };
 
-    const prefixPayload = {
-      prefix,
-      user,
-      url: formattedURL,
-      justification,
-    };
+//     const prefixPayload = {
+//       prefix,
+//       user,
+//       url: formattedURL,
+//       justification,
+//     };
 
-    const value = await PREFIX.get(prefix);
-    if (value != null) {
-      return new Response(
-        JSON.stringify({
-          message: 'Invalid Prefix, already in use or requested',
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-            Allow: 'POST',
-          },
-        },
-      );
-    }
-    await PREFIX.put(prefix, JSON.stringify(prefixPayload));
-    await USER.put(user, JSON.stringify(userPayload));
+//     const value = await PREFIX.get(prefix);
+//     if (value != null) {
+//       return new Response(
+//         JSON.stringify({
+//           message: 'Invalid Prefix, already in use or requested',
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//             Allow: 'POST',
+//           },
+//         },
+//       );
+//     }
+//     await PREFIX.put(prefix, JSON.stringify(prefixPayload));
+//     await USER.put(user, JSON.stringify(userPayload));
 
-    return new Response(
-      JSON.stringify({
-        prefix,
-        message: `Success.`,
-      }),
-      {
-        status: 201,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-        },
-      },
-    );
-  } catch (err) {
-    console.log(err);
-    return new Response(
-      JSON.stringify({
-        message: `Error: Invalid Request and/or URL.`,
-      }),
-      {
-        status: 400,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-          Allow: 'POST',
-        },
-      },
-    );
-  }
-});
+//     return new Response(
+//       JSON.stringify({
+//         prefix,
+//         message: `Success.`,
+//       }),
+//       {
+//         status: 201,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//         },
+//       },
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     return new Response(
+//       JSON.stringify({
+//         message: `Error: Invalid Request and/or URL.`,
+//       }),
+//       {
+//         status: 400,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//           Allow: 'POST',
+//         },
+//       },
+//     );
+//   }
+// });
 
-router.post('/userInfo', async request => {
-  const jwt = request.headers.get('Authorization').split(' ')[1];
-  const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
-  const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
-  try {
-    const result = await parseJwt(jwt, issuer, audience);
-    if (!result.valid) {
-      return new Response(
-        JSON.stringify({
-          message: `Authorization Failed.`,
-        }),
-        {
-          status: 400,
-          headers: {
-            'content-type': 'application/json',
-            ...corsHeaders,
-            Allow: 'POST',
-          },
-        },
-      );
-    }
-    const sub = result.payload.sub;
-    const user = await USER.get(sub, { type: 'json' });
-    const prefix = await PREFIX.get(user.prefix, { type: 'json' });
+// router.post('/userInfo', async request => {
+//   const jwt = request.headers.get('Authorization').split(' ')[1];
+//   const issuer = 'https://nitrone.eu.auth0.com/'; // Auth0 origin.
+//   const audience = 'https://nitrone.eu.auth0.com/api/v2/'; // Auth0 client id.
+//   try {
+//     const result = await parseJwt(jwt, issuer, audience);
+//     if (!result.valid) {
+//       return new Response(
+//         JSON.stringify({
+//           message: `Authorization Failed.`,
+//         }),
+//         {
+//           status: 400,
+//           headers: {
+//             'content-type': 'application/json',
+//             ...corsHeaders,
+//             Allow: 'POST',
+//           },
+//         },
+//       );
+//     }
+//     const sub = result.payload.sub;
+//     const user = await USER.get(sub, { type: 'json' });
+//     const prefix = await PREFIX.get(user.prefix, { type: 'json' });
 
-    const responsePayload = {
-      prefix,
-      user,
-    };
+//     const responsePayload = {
+//       prefix,
+//       user,
+//     };
 
-    return new Response(
-      JSON.stringify({
-        ...responsePayload,
-        message: `Success.`,
-      }),
-      {
-        status: 200,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-        },
-      },
-    );
-  } catch (err) {
-    console.log(err);
-    return new Response(
-      JSON.stringify({
-        message: `Error: Invalid Request and/or URL.`,
-      }),
-      {
-        status: 400,
-        headers: {
-          'content-type': 'application/json',
-          ...corsHeaders,
-          Allow: 'POST',
-        },
-      },
-    );
-  }
-});
+//     return new Response(
+//       JSON.stringify({
+//         ...responsePayload,
+//         message: `Success.`,
+//       }),
+//       {
+//         status: 200,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//         },
+//       },
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     return new Response(
+//       JSON.stringify({
+//         message: `Error: Invalid Request and/or URL.`,
+//       }),
+//       {
+//         status: 400,
+//         headers: {
+//           'content-type': 'application/json',
+//           ...corsHeaders,
+//           Allow: 'POST',
+//         },
+//       },
+//     );
+//   }
+// });
 
 router.options('*', request => {
   // Make sure the necessary headers are present

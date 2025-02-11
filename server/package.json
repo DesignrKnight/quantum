@@ -1,0 +1,16 @@
+{
+	"name": "server",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy --minify",
+		"wrangler": "wrangler"
+	},
+	"dependencies": {
+		"hono": "^4.6.20",
+		"nanoid": "^5.0.9"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250204.0",
+		"wrangler": "^3.107.3"
+	}
+}

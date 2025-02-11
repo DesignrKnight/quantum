@@ -1,0 +1,13 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "quantum_server",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-02-09",
+	"kv_namespaces": [
+		{
+			"binding": "dev",
+			"id": "0e6ddfb2e8954445b5068c36207da149",
+			"preview_id": "0e6ddfb2e8954445b5068c36207da149"
+		}
+	]
+}
